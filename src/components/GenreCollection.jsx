@@ -1,6 +1,7 @@
 import Book from './Book.jsx'
 const GenreCollection = ({ genre }) => {
 
+  // All books
   const bookData = {
     "fiction": [
       {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "price": 10.00},
