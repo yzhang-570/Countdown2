@@ -1,0 +1,48 @@
+import { useState } from 'react'
+import './App.css'
+import GenreCollection from './components/GenreCollection.jsx'
+
+function App() {
+  // const [fictionDisplayed, setFictionDisplayed] = useState(true);
+  // const [nonfictionDisplayed, setNonfictionDisplayed] = useState(true);
+  // const [childrenDisplayed, setChildrenDisplayed] = useState(true);
+
+  // const toggleFictionDisplay = () => {
+  //   setFictionDisplayed(!fictionDisplayed);
+  // }
+  // const toggleNonfictionDisplay = () => {
+  //   setNonfictionDisplayed(!nonfictionDisplayed);
+  // }
+
+  // const toggleChildrenDisplay = () => {
+  //   setChildrenDisplayed(!childrenDisplayed);
+  // }
+
+  const [genresDisplayed, setGenresDisplayed] = useState(['fiction', 'non-fiction', 'children']);
+  const allGenres = ['fiction', 'non-fiction', 'children'];
+
+  const toggleGenreDisplay = (targetGenre) => {
+    if (genresDisplayed.includes(targetGenre)) {
+      setGenresDisplayed(genresDisplayed.filter(genre => genre !== targetGenre));
+    }
+    else {
+      setGenresDisplayed([...genresDisplayed, targetGenre]);
+    }
+  }
+
+  return (
+    <>
+      <h1>Online Bookstore</h1>
+      <div className='toggle-button-div'>
+        <button onClick={() => toggleGenreDisplay('fiction')}>{genresDisplayed.includes('fiction') ? 'Hide' : 'Show'} Fiction</button>
+        {/* <button onClick={() => toggleNonfictionDisplay()}>{nonfictionDisplayed ? 'Hide' : 'Show'} Nonfiction</button>
+        <button onClick={() => toggleChildrenDisplay()}>{childrenDisplayed ? 'Hide' : 'Show'} Children</button> */}
+      </div>
+      {genresDisplayed.map(genre => (
+        <GenreCollection genre={genre}/>
+      ))}
+    </>
+  )
+}
+
+export default App
