@@ -3,20 +3,18 @@ import './App.css'
 import GenreCollection from './components/GenreCollection.jsx'
 
 function App() {
-  // Display status for each genre - can be on (true) or off (false)
-  const [fictionDisplayed, setFictionDisplayed] = useState(true);
-  const [nonfictionDisplayed, setNonfictionDisplayed] = useState(true);
-  const [childrenDisplayed, setChildrenDisplayed] = useState(true);
+  // List of genres displayed
+  const [genresDisplayed, setGenresDisplayed] = useState(['fiction', 'non-fiction', 'children']);
 
-  // Functions to toggle display of each genre
-  const toggleFictionDisplay = () => {
-    setFictionDisplayed(!fictionDisplayed);
-  }
-  const toggleNonfictionDisplay = () => {
-    setNonfictionDisplayed(!nonfictionDisplayed);
-  }
-  const toggleChildrenDisplay = () => {
-    setChildrenDisplayed(!childrenDisplayed);
+  // Toggle (turn on/off) display of specified genre
+  const toggleGenreDisplay = (targetGenre) => {
+    // If currently displayed
+    if (genresDisplayed.includes(targetGenre)) {
+      setGenresDisplayed(genresDisplayed.filter(genre => genre !== targetGenre));
+    }
+    else {
+      setGenresDisplayed([...genresDisplayed, targetGenre]);
+    }
   }
 
   return (
@@ -25,15 +23,29 @@ function App() {
 
       {/* Buttons to toggle display for each genre */}
       <div className='toggle-button-div'>
-        <button onClick={() => toggleFictionDisplay()}>{fictionDisplayed ? 'Hide' : 'Show'} Fiction</button>
-        <button onClick={() => toggleNonfictionDisplay()}>{nonfictionDisplayed ? 'Hide' : 'Show'} Nonfiction</button>
-        <button onClick={() => toggleChildrenDisplay()}>{childrenDisplayed ? 'Hide' : 'Show'} Children</button>
+        {['fiction', 'non-fiction', 'children'].map(genre => (
+
+          <button
+            onClick={() => toggleGenreDisplay(genre)} //Toggle display status
+          >
+            {/* Button text: Show/Hide [Genre] */}
+            {genresDisplayed.includes(genre) ? 'Hide' : 'Show'} {genre[0].toUpperCase() + genre.slice(1)}
+          </button>
+
+        ))}
       </div>
 
       {/* Renders displayed genres and books of displayed genres */}
-      {fictionDisplayed && <GenreCollection genre='fiction'/>}
-      {nonfictionDisplayed && <GenreCollection genre='non-fiction'/>}
-      {childrenDisplayed && <GenreCollection genre='children'/>}
+      {genresDisplayed.includes('fiction') && <GenreCollection genre='fiction'/>}
+      {genresDisplayed.includes('non-fiction') && <GenreCollection genre='non-fiction'/>}
+      {genresDisplayed.includes('children') && <GenreCollection genre='children'/>}
+
+
+
+      {/* alt method - issue: order of genres is inconsistent */}
+      {/* {genresDisplayed.map(genre => (
+        <GenreCollection genre={genre}/>
+      ))} */}
     </>
   )
 }

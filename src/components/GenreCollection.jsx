@@ -20,6 +20,7 @@ const GenreCollection = ({ genre }) => {
     ]
   };
 
+  // List of books in specified genre
   const bookList = bookData[genre];
 
   return (
